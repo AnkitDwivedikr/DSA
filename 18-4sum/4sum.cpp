@@ -1,41 +1,41 @@
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        vector<vector<int>>result;
-        int n = nums.size();
-        if(n<4){
-            return result;
-        }
+        vector<vector<int>>ans;
         sort(nums.begin(), nums.end());
+        int n = nums.size();
+
         for(int i=0; i<n-3; i++){
-            if(i>0 && nums[i]==nums[i-1]) //skip the duplicate values.
+            if(i>0 && nums[i]==nums[i-1])
             continue;
+
             for(int j=i+1; j<n-2; j++){
-                if(j>i+1 && nums[j]==nums[j-1]) // skip the dupllicate values.
+                if(j>i+1 && nums[j]==nums[j-1])
                 continue;
-                int left = j+1;
-                int right = n-1;
-                while(left<right){
-                    long long sum = (long long) nums[i]+nums[j]+nums[left]+nums[right];
-                    if(sum==target){
-                        result.push_back({nums[i], nums[j], nums[left], nums[right]});
-                        left++;
-                        right--;
-                        // skip the duplicate values.
-                        while(left<right&& nums[left]==nums[left-1])
-                        left++;
-                        while(left<right && nums[right]==nums[right+1])
-                        right--;
+
+              long long sum = nums[i]+nums[j];
+                int start = j+1, end = n-1;
+
+                while(start<end){
+                    long long total = sum + nums[start] + nums[end];
+
+                    if(total == target){
+                    ans.push_back({nums[i],nums[j], nums[start], nums[end]});
+                    start++;
+                    end--;
+                    while(start<end && nums[start]==nums[start-1])
+                    start++;
+                    while(start<end && nums[end]==nums[end+1])
+                    end--;
                     }
-                        else if(sum<target){
-                            left++;
-                        }
-                        else
-                        right--;
+                    else if(total<target){
+                        start++;
                     }
+                    else
+                    end--;
                 }
             }
-        
-        return result;
+        }
+        return ans;
     }
 };
