@@ -1,7 +1,7 @@
 class Solution {
 public:
-    // down-up approch
 
+// Space optimazation
     int rob(vector<int>& nums) {
         
         int n = nums.size();
@@ -9,16 +9,15 @@ public:
         return nums[0];
 
         if(n==2)
-        return max(nums[0],nums[1]);
+        return max(nums[0], nums[1]);
 
-        vector<int>dp(n,-1);
-        dp[0] = nums[0];
-        dp[1] = max(nums[0],nums[1]);
+        int curr, prev = max(nums[0],nums[1]), prev2=nums[0];
 
         for(int i=2; i<n; i++){
-            dp[i]= max(nums[i]+dp[i-2], dp[i-1]);
+            curr  = max(nums[i]+prev2, prev);
+            prev2 = prev;
+            prev = curr;
         }
-
-        return dp[n-1];
+        return curr;
     }
 };
